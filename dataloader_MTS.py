@@ -19,15 +19,15 @@ class ts_multimodal_text(Dataset):
         self.p=patch_len
         self.s=stride
         self.offsets=[]
+        
         with open(self.file_path,'rb') as f:
             offset=0
             for line in f:
                 self.offsets.append(offset)
                 offset+=len(line)
         
-
     def __len__(self):
-      return len(self.offsets)
+        return len(self.offsets)
         
     ## to patchify/sliding window operation of the ts_input
     def padding_stride(self,x,p=256,s=256):
@@ -118,11 +118,11 @@ class ts_multimodal_text(Dataset):
               'ts_inputs':torch.stack(ts_inputs,dim=1),  ##stacking along the dim=1 (N,C_in,P)
               'ts_pairs':ts_pairs}   ##list of ts_data(tensors) of size (1,N_i,P)
 
-
 ###dataloader instantiation
 
 import torch.nn.functional as F
 ### helper for collate function ts_mask for channel dimension
+
 def mask(actual_in:torch.Tensor,device=device):
     ##c_in,N,P=ts_input.shape
     bs=1
@@ -189,7 +189,7 @@ def collate_func(batch,tokenizer=None,device=device):
         output_start_index = input_ids[0].shape[0] - output_len
         
         ##ts_mask for channel dimension
-        ts_token=mask(channels,device =device)
+        ts_token=mask(channels,device=device)
         ## create a list of output_ids with no no_loss tokens
         labels_batch.append(output_ids)
         

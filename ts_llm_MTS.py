@@ -5,15 +5,16 @@ from  TS_encoder import PatchTSTEncoder
 from  transformers import AutoModelForCausalLM,AutoTokenizer
 from dataloader_MTS import ts_multimodal_text,collate_func
 import os
+import sys
+import numpy as np
 from torch.utils.data import Dataset,DataLoader
+
 device ='cuda' if torch.cuda.is_available() else 'cpu'
 
 ##loading the base LLM model and tokenizer
 model_name='microsoft/Phi-4-mini-reasoning'
 model = AutoModelForCausalLM.from_pretrained(model_name,local_files_only=True)
 tokenizer =AutoTokenizer.from_pretrained(model_name,local_files_only=True)
-
-device ='cuda' if torch.cuda.is_available() else 'cpu'
 model_dtype=next(model.parameters()).dtype
 
 ## to expand the tokenizer to add the special tokens <ts> <ts/>
