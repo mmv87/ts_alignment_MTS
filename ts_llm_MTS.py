@@ -24,7 +24,7 @@ model.resize_token_embeddings(len(tokenizer))
 
 ##dataset fetching
 import json
-_json_file = os.path.join(os.environ["SLURM_TMPDIR"], "align.jsonl")
+_json_file = os.path.join(os.environ["SLURM_TMPDIR"],"align_256.jsonl")
 
 dataset= ts_multimodal_text(128,128,_json_file,tokenizer,device=device,model_dtype=None)
 dataloader=DataLoader(dataset,batch_size=1,shuffle=True,collate_fn=lambda b:collate_func(b,tokenizer=tokenizer,device=device))
