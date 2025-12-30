@@ -94,10 +94,8 @@ class LLM_wrapper(nn.Module):
         is_ts_new[final_ts_indices]=True
     
         new_text_indices = torch.nonzero(~is_ts_new).squeeze()
-        text_container_new=torch.zeros((T_new,text_emb_dim),device=device)
-        ##text_container_new.requires_grad_(requires_grad=True)
-        ts_container_new=torch.zeros((T_new,ts_emb_dim),device=device)
-        ##ts_container_new.requires_grad_(requires_grad=True)
+        text_container_new=torch.zeros((T_new,text_emb_dim),device=self.device)
+        ts_container_new=torch.zeros((T_new,ts_emb_dim),device=self.device)
 
         ##scatter_ operation
         ts_scatter_idx=final_ts_indices.unsqueeze(1).expand(-1,ts_emb_dim)
